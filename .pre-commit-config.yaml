@@ -1,0 +1,51 @@
+# Git-гейты Hypomnemata (система-как-код, INV-17). Срабатывают ТОЛЬКО на файлах коммита
+# (pre-commit передаёт staged-файлы хукам). Установка на свежем клоне: `mise install`
+# (postinstall ставит git-хук). Ловят и агента, и ручную правку в Obsidian. См. ADR-0019.
+# Усложнятся — выносите в отдельный репо (`repo:` вместо local).
+repos:
+  - repo: local
+    hooks:
+      - id: frontmatter-check
+        name: frontmatter — YAML-валидность + status-схема (ADR-0012)
+        entry: python 80-kernel/scripts/frontmatter-check.py
+        language: python
+        additional_dependencies: ['pyyaml']
+        files: \.md$
+        exclude: '^(\.claude/|80-kernel/(scaffolds|templates)/|90-archive/)'
+        pass_filenames: true
+
+      - id: task-artifact
+        name: задача юнита обязана назвать рабочий продукт (ADR-0036 п.7)
+        entry: python3 80-kernel/scripts/task-artifact-check.py
+        language: system
+        files: '^10-governance/6-tasks/T-.*\.md$'
+        pass_filenames: true
+
+      - id: task-id-unique
+        name: номер задачи уникален (коллизия параллельных сессий)
+        entry: python3 80-kernel/scripts/task-id-unique-check.py
+        language: system
+        files: '^10-governance/6-tasks/T-.*\.md$'
+        pass_filenames: false
+
+      - id: tray-outcome
+        name: слитый лоток без пустых исходов (ADR-0032 п.5, правило слива)
+        entry: python3 80-kernel/scripts/tray-outcome-check.py
+        language: system
+        files: '^10-governance/7-plans/archive/.*forreview.*\.md$'
+        pass_filenames: true
+
+      - id: closed-date
+        name: закрытая карточка задачи/проекта несёт дату closed
+        entry: python3 80-kernel/scripts/closed-date-check.py
+        language: system
+        files: '^10-governance/(5-projects|6-tasks)/.*\.md$'
+        pass_filenames: true
+
+      - id: naming-convention
+        name: имя файла — строчная латиница без пробелов (ADR-0006)
+        entry: bash .claude/hooks/check-naming.sh
+        language: system
+        files: \.md$
+        exclude: '^(90-archive/|\.principles/)'
+        pass_filenames: true

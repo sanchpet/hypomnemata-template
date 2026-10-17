@@ -1,0 +1,6 @@
+# Hypomnemata toolchain. Свежий клон: `mise install` (postinstall ставит git-хук pre-commit).
+# Гейты — .pre-commit-config.yaml (frontmatter, задачи, лотки, имена). См. ADR-0019.
+# Хуки — local, на Python: frontmatter (language: python, pyyaml в изолированном venv
+# от pre-commit), остальные — system python3, только stdlib.
+[tools]
+pre-commit = { version = "4.6.0", postinstall = "mise exec -- pre-commit install --install-hooks || true" }

@@ -1,0 +1,37 @@
+# Obsidian UI state (machine-specific, churns constantly)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+# Zotero Integration downloads a per-platform PDF helper binary; each machine fetches its own
+.obsidian/plugins/obsidian-zotero-desktop-connector/pdfannots2json*
+
+# Code & raw resources — видны агенту/VSCode, скрыты от Obsidian (dot-dirs), вне git.
+# .repos/ — внешние репозитории со своими remote: контент вне git, mount-точку и README трекаем.
+.repos/*
+!.repos/README.md
+.resources/
+
+# Вложенные репозитории вместо submodules (ADR-0038): контент вне git родителя,
+# адреса и раскладка — в 80-kernel/scripts/repos-bootstrap.sh. Наш README карты принципов
+# остаётся под версией. Дописали репо в реестр — допишите его путь сюда.
+.principles/zp/
+.principles/fpf/
+.principles/spf/
+# 30-knowledge/core/   # опционально: ядро знаний, общее для двух экзокортексов (ADR-0027)
+.DS_Store
+
+# Obsidian local trash (machine-specific)
+.trash/
+.claude/checkpoint.md
+
+# Переопределение настроек под фактический корень клона на машине
+# (ADR-0010: канонический autoMemoryDirectory коммитится, машинная дельта — сюда; ADR-0030)
+.claude/settings.local.json
+.claude/worktrees/
+
+# Python bytecode from tracked utility scripts
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Agent scratch dumps (a11y trees, page snapshots) — transient, never knowledge
+.claude/tmp-*

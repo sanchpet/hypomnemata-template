@@ -1,0 +1,17 @@
+{
+  "autoMemoryDirectory": "<vault-root>/70-memory",
+  "enabledMcpjsonServers": [
+    "mim-knowledge"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__mim-knowledge__knowledge_search",
+      "mcp__mim-knowledge__knowledge_get_document",
+      "mcp__mim-knowledge__knowledge_list_documents",
+      "mcp__mim-knowledge__knowledge_concept_search_by_name",
+      "mcp__mim-knowledge__personal_search",
+      "mcp__mim-knowledge__personal_list_sources",
+      "mcp__mim-knowledge__search"
+    ]
+  }
+}
